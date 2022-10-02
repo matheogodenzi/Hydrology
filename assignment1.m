@@ -55,7 +55,6 @@ title('Annual Precipitations');
 xlabel('years');
 ylabel('precipitations (mm)');
 
-
 % -------------------------------------------------------------------------
 % # 5: Compute rainfall maxima of a certain duration
 % -------------------------------------------------------------------------
@@ -93,7 +92,7 @@ three_hours_max;
 
 years = 1981:2019;
 
-
+%GIt tes
 figure
 stem(years, three_hours_max,'Color',[0,0.7,0.9]);
 
