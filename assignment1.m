@@ -92,7 +92,7 @@ three_hours_max;
 
 years = 1981:2019;
 
-%GIt tes
+
 figure
 stem(years, three_hours_max,'Color',[0,0.7,0.9]);
 
@@ -205,10 +205,37 @@ end
 
 AnnualMax
 
+%% Meme resultat, je trouve plus simple cette ecriture
+%{
+D = [1,3,6,12,24,48];
+
+AnnualMax = zeros(39,6);
+
+
+    count = 1;
+    for k = 1981:2019
+        indices = y == k;
+        yearly_prec = h(indices);
+        for f = 1:length(D)
+            d = D(f)-1;
+            max = 0;
+            for l = 1:sum(indices)-d
+                s = sum(yearly_prec(l:l+d));
+                if s >= max
+                    max = s;
+                end
+            end 
+            AnnualMax(count,f) = max;
+ 
+        end 
+  count = count + 1;
+    
+    end
+AnnualMax
 
 
 
-
+%}
 
 
 
