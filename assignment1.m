@@ -184,11 +184,11 @@ count = 1;
 for k = 1981:2019
     indices = y == k;
     yearly_prec = h(indices);
-    windows = [1 3 6 12 24 48];
+    D = [1 3 6 12 24 48];
     
     ind = 1;
     for m = 1:49
-        if ismember(m, windows)
+        if ismember(m, D)
             max = 0;
             for l = 1:sum(indices)+1-m
                 s = sum(yearly_prec(l:l+m-1));
@@ -247,4 +247,4 @@ AnnualMax
 % -------------------------------------------------------------------------
 % when you are confident about your results, save the variables AnnualMax
 % and D by uncommenting the following line: 
-save('assignment1_output_part1.mat','D','H_Gum');
+save('assignment1_output_part1.mat','D','AnnualMax');
