@@ -11,7 +11,7 @@ clc %clear the command window
 % -------------------------------------------------------------------------
 % # 1: Compute the Weibull plotting position
 % -------------------------------------------------------------------------
-%% Computing Fh nd Yf
+%% (1) Computing Fh nd Yf
 % import the data from Part1 using the function load
 load assignment1_output_part1.mat
 
@@ -39,7 +39,7 @@ end
 % for first column
 plot(sortedAnnualMax(:,1), Fh, 'o');
 
-%% Fitting Gumbel curve
+%% (2) Fitting Gumbel curve
 % method of moments
 
 % Gumbel method
