@@ -49,7 +49,10 @@ plot(sortedAnnualMax(), Fh, 'o');
 title('Empirical Frequencies vs Precipitation Depth ')
 xlabel('Precipitation Depth [mm]') 
 ylabel('Empirical Frequencies [Fh]')
-legend({'Annual Max depth in 1 hour [mm]','Annual Max depth in 3 hours [mm]','Annual Max depth in 6 hours [mm]','Annual Max depth in 12 hours [mm]','Annual Max depth in 24 hours [mm]','Annual Max depth in 48 hours [mm]',},'Location','southeast')
+legend({'Annual Max depth in 1 hour [mm]','Annual Max depth in 3 hours [mm]', ...
+      'Annual Max depth in 6 hours [mm]','Annual Max depth in 12 hours [mm]', ...
+      'Annual Max depth in 24 hours [mm]','Annual Max depth in 48 hours [mm]',}, ...
+      'Location','southeast')
 
 %% (2) Fitting Gumbel curve
 % method of moments
@@ -109,11 +112,17 @@ plot(n, GumbelComputeMoments)
 title('Gumbel Distributions')
 xlabel('Precipitation Depth h [mm]') 
 ylabel('Empirical Frequencies [Fh] and Regression Values')
-legend({'Annual Max depth in 1 hour [mm]','Annual Max depth in 3 hours [mm]','Annual Max depth in 6 hours [mm]','Annual Max depth in 12 hours [mm]','Annual Max depth in 24 hours [mm]','Annual Max depth in 48 hours [mm]',},'Location','southeast')
+legend({'Annual Max depth in 1 hour [mm]','Annual Max depth in 3 hours [mm]', ...
+        'Annual Max depth in 6 hours [mm]','Annual Max depth in 12 hours [mm]', ...
+        'Annual Max depth in 24 hours [mm]','Annual Max depth in 48 hours [mm]',}, ...
+        'Location','southeast')
 
 hold on 
 plot(sortedAnnualMax(), Fh, 'o');
-legend({'Annual Max depth in 1 hour [mm]','Annual Max depth in 3 hours [mm]','Annual Max depth in 6 hours [mm]','Annual Max depth in 12 hours [mm]','Annual Max depth in 24 hours [mm]','Annual Max depth in 48 hours [mm]',},'Location','southeast')
+legend({'Annual Max depth in 1 hour [mm]','Annual Max depth in 3 hours [mm]', ...
+        'Annual Max depth in 6 hours [mm]','Annual Max depth in 12 hours [mm]', ...
+        'Annual Max depth in 24 hours [mm]','Annual Max depth in 48 hours [mm]',}, ...
+        'Location','southeast')
 % TO-DO : set the same colors to both plot elements 1 to 1 (regressions and
 % points) i.e. the points corresponding to a regression curve should have
 % the same color
