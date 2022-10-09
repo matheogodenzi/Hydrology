@@ -71,7 +71,7 @@ end
 GumbelParMoments
 %%
 % Gumbel method
-GumbelParGumbelParMoments = zeros(2,6);
+GumbelPar = zeros(2,6);
 m = length(std_vect);
 
 mu_YF = mean(YF);
@@ -82,7 +82,27 @@ for k = 1:m
     alphaG = sigma_YF/std_vect(k);
     muG = mean_vect(k)-(mu_YF/sigma_YF)*std_vect(k);
     
-    GumbelParGumbelParMoments(1,k) = alphaG;
-    GumbelParGumbelParMoments(2,k) = muG;
+    GumbelPar(1,k) = alphaG;
+    GumbelPar(2,k) = muG;
 end
-GumbelParGumbelParMoments;
+GumbelPar;
+
+%% (3)Compute analytical Gumbel distributions
+
+n = 0:0.5:110;
+m = length(n);
+GumbelCompute = zeros(m,6);
+GumbelComputeMoments = zeros(m,6);
+
+for k = 1:m
+    for l = 1:6
+       GumbelCompute(k,l) = exp(-exp(-GumbelPar(1,l)*(n(k)-GumbelPar(2,l))));
+       GumbelComputeMoments(k,l) = exp(-exp(-GumbelParMoments(1,l)*(n(k)-GumbelParMoments(2,l))));
+    end 
+end 
+
+
+%%
+
+
+
