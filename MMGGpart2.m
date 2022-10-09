@@ -92,7 +92,7 @@ GumbelPar;
 
 %% (3)Compute analytical Gumbel distributions
 
-n = 0:0.5:110;
+n = 0:0.5:110;%TO-DO : revoir si on veut pas partir à 1 plutôt...?
 m = length(n);
 GumbelCompute = zeros(m,6);
 GumbelComputeMoments = zeros(m,6);
@@ -142,11 +142,20 @@ Weibull_T;
 
 % inverting Gumbel distribution 
 
-for k = 
-    h = -log(-log(GumbelCompute))/
+T = zeros(221,6);
+for k = 1:221
+    for l = 1:6
+        T(k,l) = 1/(1+GumbelCompute(k,l));
+    end 
+end 
+
 
 
 figure(24)
 n = 1:39;
+m = 0:0.5:110;
 plot(Weibull_T, sortedAnnualMax(),'o')
+
+figure(25)
+plot(T,m)
 
