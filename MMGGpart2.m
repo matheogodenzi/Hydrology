@@ -114,7 +114,30 @@ legend({'Annual Max depth in 1 hour [mm]','Annual Max depth in 3 hours [mm]','An
 hold on 
 plot(sortedAnnualMax(), Fh, 'o');
 legend({'Annual Max depth in 1 hour [mm]','Annual Max depth in 3 hours [mm]','Annual Max depth in 6 hours [mm]','Annual Max depth in 12 hours [mm]','Annual Max depth in 24 hours [mm]','Annual Max depth in 48 hours [mm]',},'Location','southeast')
-% TO-DO : set the same colors to both plot elements (regressions and
-% points) 
+% TO-DO : set the same colors to both plot elements 1 to 1 (regressions and
+% points) i.e. the points corresponding to a regression curve should have
+% the same color
+
+
 %% (5) Th and h
+
+%computing return period
+
+q = length(Fh);
+Weibull_T = zeros(q,1);
+
+for k = 1:q
+    Weibull_T(k) = 1/(1-Fh(k));
+end 
+Weibull_T;
+
+% inverting Gumbel distribution 
+
+for k = 
+    h = -log(-log(GumbelCompute))/
+
+
+figure(24)
+n = 1:39;
+plot(Weibull_T, sortedAnnualMax(),'o')
 
