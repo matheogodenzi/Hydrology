@@ -62,13 +62,13 @@ GumbelParMoments = zeros(2,6);
 m = length(std_vect);
 
 for k = 1:m
-    alpha = (std_vect(k)*sqrt(6))/pi;
+    alpha = pi/(std_vect(k)*sqrt(6));
     mu = mean_vect(k)-0.5772/alpha;
 
     GumbelParMoments(1,k) = alpha;
     GumbelParMoments(2,k) = mu;
 end 
-GumbelParMoments
+GumbelParMoments;
 %%
 % Gumbel method
 GumbelPar = zeros(2,6);
@@ -102,7 +102,19 @@ for k = 1:m
 end 
 
 
-%%
+%% (4) Plot 
 
+figure(23)
+plot(n, GumbelComputeMoments)
+title('Gumbel Distributions')
+xlabel('Precipitation Depth h [mm]') 
+ylabel('Empirical Frequencies [Fh] and Regression Values')
+legend({'Annual Max depth in 1 hour [mm]','Annual Max depth in 3 hours [mm]','Annual Max depth in 6 hours [mm]','Annual Max depth in 12 hours [mm]','Annual Max depth in 24 hours [mm]','Annual Max depth in 48 hours [mm]',},'Location','southeast')
 
+hold on 
+plot(sortedAnnualMax(), Fh, 'o');
+legend({'Annual Max depth in 1 hour [mm]','Annual Max depth in 3 hours [mm]','Annual Max depth in 6 hours [mm]','Annual Max depth in 12 hours [mm]','Annual Max depth in 24 hours [mm]','Annual Max depth in 48 hours [mm]',},'Location','southeast')
+% TO-DO : set the same colors to both plot elements (regressions and
+% points) 
+%% (5) Th and h
 
