@@ -42,23 +42,26 @@ ylabel('Fh')
 
 YF = -log(-log(Fh));
 
-% Plot of Fh vs h
-% for first column
+% Plot of Fh vs h for first column
+% setting up colors for all the plots
+newcolors = [0.6350 0.0780 0.1840; 0 0.4470 0.7410; 0.8500 0.3250 0.0980; ...
+        0.9290 0.6940 0.1250; 0.4940 0.1840 0.5560; 0.4660 0.6740 0.1880];
 figure(22)
-plot(sortedAnnualMax(), Fh, 'o');
+colororder(newcolors)
+plot(sortedAnnualMax(), Fh, '.');
 title('Empirical Frequencies vs Precipitation Depth ')
 xlabel('Precipitation Depth [mm]') 
 ylabel('Empirical Frequencies [Fh]')
-legend({'Annual Max depth in 1 hour [mm]','Annual Max depth in 3 hours [mm]', ...
-      'Annual Max depth in 6 hours [mm]','Annual Max depth in 12 hours [mm]', ...
-      'Annual Max depth in 24 hours [mm]','Annual Max depth in 48 hours [mm]',}, ...
-      'Location','southeast')
+lgd = legend({'1 hour', '3 hours', '6 hours', ...
+        '12 hours', '24 hours', '48 hours'}, ...
+        "Location", "southeast", "NumColumns",2);
+title(lgd, "Annual Max depth over time span [mm]")
 
 %% (2) Fitting Gumbel curve
 % method of moments
 % calculating means and standard deviation for each duration 
 std_vect = std(AnnualMax);
-mean_vect = mean (AnnualMax);
+mean_vect = mean(AnnualMax);
 
 %defining variables 
 GumbelParMoments = zeros(2,6);
@@ -92,7 +95,7 @@ GumbelPar;
 
 %% (3)Compute analytical Gumbel distributions
 
-n = 0:0.5:110;%TO-DO : revoir si on veut pas partir à 1 plutôt...?
+n = 0:0.5:110;              
 m = length(n);
 GumbelCompute = zeros(m,6);
 GumbelComputeMoments = zeros(m,6);
@@ -104,46 +107,26 @@ for k = 1:m
     end 
 end 
 
-
 %% (4) Plot 
 
-%Going to set different call to "plot" to set the color right for each
-%curve
-
 figure(23)
-plot(n, GumbelComputeMoments(:,1),"color",[0.6350 0.0780 0.1840])
-hold on
-plot(n, GumbelComputeMoments(:,2),"color",[0 0.4470 0.7410])
-hold on
-plot(n, GumbelComputeMoments(:,3),"color",[0.8500 0.3250 0.0980])
-hold on
-plot(n, GumbelComputeMoments(:,4),"color", [0.9290 0.6940 0.1250])
-hold on 
-plot(n, GumbelComputeMoments(:,5),"color",[0.4940 0.1840 0.5560])
-hold on 
-plot(n, GumbelComputeMoments(:,6),"Color",[0.4660 0.6740 0.1880])
+colororder(newcolors)
+plot(n, GumbelComputeMoments)
 title('Gumbel Distributions')
 xlabel('Precipitation Depth h [mm]') 
 ylabel('Empirical Frequencies [Fh] and Regression Values')
-legend({'Annual Max depth in 1 hour [mm]','Annual Max depth in 3 hours [mm]', ...
-        'Annual Max depth in 6 hours [mm]','Annual Max depth in 12 hours [mm]', ...
-        'Annual Max depth in 24 hours [mm]','Annual Max depth in 48 hours [mm]',}, ...
-        'Location','southeast')
-
 hold on 
-plot(sortedAnnualMax(), Fh, '.');
-legend({'Annual Max depth in 1 hour [mm]','Annual Max depth in 3 hours [mm]', ...
-        'Annual Max depth in 6 hours [mm]','Annual Max depth in 12 hours [mm]', ...
-        'Annual Max depth in 24 hours [mm]','Annual Max depth in 48 hours [mm]',}, ...
-        'Location','southeast')
-% TO-DO : set the same colors to both plot elements 1 to 1 (regressions and
-% points) i.e. the points corresponding to a regression curve should have
-% the same color
-
+plot(sortedAnnualMax(), Fh, '.'); % (39x6), (39x1)
+lgd = legend({' ',' ',' ',' ',' ',' ','1 hour','3 hours', ...
+        '6 hours','12 hours', ...
+        '24 hours','48 hours',}, ...
+        'Location','southeast', 'NumColumns',2);
+title(lgd, "Annual Max depth over time span [mm]")
 
 %% (5) Th and h
 
 %computing return period
+
 q = length(Fh);
 Weibull_T = zeros(q,1);
 
@@ -153,33 +136,62 @@ end
 Weibull_T;
 
 
-% inverting Gumbel distribution 
 T = zeros(221,6);
-h = zeros(221,1);
 for k = 1:221
     for l = 1:6
         T(k,l) = 1/(1-GumbelCompute(k,l));
-        h(k,l) = muG - (1/alphaG)*log(-log(1-1/T(k,l)));
     end 
 end 
 
-
-
-
+%% (6) plotting 
 
 figure(24)
-n = 1:39;
-m = 0:0.5:110;
-plot(Weibull_T, sortedAnnualMax(),'o')
+colororder(newcolors)
+plot(Weibull_T, sortedAnnualMax(),'.'); % dimensions : (39x1), (39x6)
+axis([0, 50, 0, 140])
+% compute h by reverting analytical formula (check variables)
+% hrevert = muG - log(-log(1-1/T))/alphaG;
+hrevert = zeros(221,6);
+Tbis = 0:0.5:110;
+for k = 1:221
+    for l = 1:6
+        hrevert(k,l) = GumbelPar(2,l) -log(-log(1-1/Tbis(k)))/GumbelPar(1,l);
+    end 
+end 
 
 figure(25)
-plot(T,h)
+n = 1:39;
 
-h
+colororder(newcolors)
+plot(Weibull_T, sortedAnnualMax(),'.'); % dimensions : (39x1), (39x6)
+title('Continuous Gumbel distribution')
+xlabel('Return period T [years]') 
+ylabel('Rainfall depth [mm]')
+axis([0, 60, 0, 140])
+hold on 
+plot(Tbis,hrevert) % (221x1), (221x6)
+lgd = legend({' ',' ',' ',' ',' ',' ', '1 hour', '3 hours', '6 hours', ...
+        '12 hours', '24 hours', '48 hours'}, ...
+        "Location", "southeast", "NumColumns",2);
+title(lgd, "Annual Max depth over time span [mm]")
 
+hold off
 
+%% (7) Building matrix of predicted depth
 
+H_Gum = zeros(3,6);
+k = 1;
+for t = [10, 40, 100]
+    s = Tbis == t;
+    for u = 1:6
+        H_Gum(k,u) = hrevert(s,u);
+    end 
+    k = k + 1;
+end 
+H_Gum
 
-
-
+%% (8) saving elements 
+T = [10 40 100];
+D = [1 3 6 12 24 48];
+save('assignment1_output_part2.mat','H_Gum', 'T', 'D');
 

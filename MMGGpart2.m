@@ -42,9 +42,12 @@ ylabel('Fh')
 
 YF = -log(-log(Fh));
 
-% Plot of Fh vs h
-% for first column
+% Plot of Fh vs h for first column
+% setting up colors for all the plots
+newcolors = [0.6350 0.0780 0.1840; 0 0.4470 0.7410; 0.8500 0.3250 0.0980; ...
+        0.9290 0.6940 0.1250; 0.4940 0.1840 0.5560; 0.4660 0.6740 0.1880];
 figure(22)
+colororder(newcolors)
 plot(sortedAnnualMax(), Fh, '.');
 title('Empirical Frequencies vs Precipitation Depth ')
 xlabel('Precipitation Depth [mm]') 
@@ -92,7 +95,7 @@ GumbelPar;
 
 %% (3)Compute analytical Gumbel distributions
 
-n = 0:0.5:110;%TO-DO : revoir si on veut pas partir à 1 plutôt...?  % selon les graphe du cours, mieux de partir à 0 MMG               
+n = 0:0.5:110;              
 m = length(n);
 GumbelCompute = zeros(m,6);
 GumbelComputeMoments = zeros(m,6);
@@ -107,7 +110,8 @@ end
 %% (4) Plot 
 
 figure(23)
-plot(n, GumbelComputeMoments) % (1x39), (221x6) ??
+colororder(newcolors)
+plot(n, GumbelComputeMoments)
 title('Gumbel Distributions')
 xlabel('Precipitation Depth h [mm]') 
 ylabel('Empirical Frequencies [Fh] and Regression Values')
@@ -116,11 +120,8 @@ plot(sortedAnnualMax(), Fh, '.'); % (39x6), (39x1)
 lgd = legend({' ',' ',' ',' ',' ',' ','1 hour','3 hours', ...
         '6 hours','12 hours', ...
         '24 hours','48 hours',}, ...
-        'Location','southeast', 'NumColumns',2); % ++ line and point order coherence with figure 25
+        'Location','southeast', 'NumColumns',2);
 title(lgd, "Annual Max depth over time span [mm]")
-% TO-DO : set the same colors to both plot elements 1 to 1 (regressions and
-% points) i.e. the points corresponding to a regression curve should have
-% the same color
 
 %% (5) Th and h
 
@@ -145,9 +146,7 @@ end
 %% (6) plotting 
 
 figure(24)
-
-n = 1:1:39;
-
+colororder(newcolors)
 plot(Weibull_T, sortedAnnualMax(),'.'); % dimensions : (39x1), (39x6)
 axis([0, 50, 0, 140])
 % compute h by reverting analytical formula (check variables)
@@ -162,6 +161,8 @@ end
 
 figure(25)
 n = 1:39;
+
+colororder(newcolors)
 plot(Weibull_T, sortedAnnualMax(),'.'); % dimensions : (39x1), (39x6)
 title('Continuous Gumbel distribution')
 xlabel('Return period T [years]') 
@@ -171,7 +172,7 @@ hold on
 plot(Tbis,hrevert) % (221x1), (221x6)
 lgd = legend({' ',' ',' ',' ',' ',' ', '1 hour', '3 hours', '6 hours', ...
         '12 hours', '24 hours', '48 hours'}, ...
-        "Location", "southeast", "NumColumns",2); % ++ line and point order coherence with figure 23
+        "Location", "southeast", "NumColumns",2);
 title(lgd, "Annual Max depth over time span [mm]")
 
 hold off
