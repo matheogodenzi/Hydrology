@@ -108,7 +108,7 @@ end
 %% (4) Plot 
 
 figure(23)
-plot(n, GumbelComputeMoments)
+plot(n, GumbelComputeMoments) % (1x39), (221x6) ??
 title('Gumbel Distributions')
 xlabel('Precipitation Depth h [mm]') 
 ylabel('Empirical Frequencies [Fh] and Regression Values')
@@ -118,7 +118,7 @@ legend({'Annual Max depth in 1 hour [mm]','Annual Max depth in 3 hours [mm]', ..
         'Location','southeast')
 
 hold on 
-plot(sortedAnnualMax(), Fh, '.');
+plot(sortedAnnualMax(), Fh, '.');2 % (39x6), (39x1)
 legend({'Annual Max depth in 1 hour [mm]','Annual Max depth in 3 hours [mm]', ...
         'Annual Max depth in 6 hours [mm]','Annual Max depth in 12 hours [mm]', ...
         'Annual Max depth in 24 hours [mm]','Annual Max depth in 48 hours [mm]',}, ...
@@ -145,7 +145,7 @@ Weibull_T;
 T = zeros(221,6);
 for k = 1:221
     for l = 1:6
-        T(k,l) = 1/(1+GumbelCompute(k,l));
+        T(k,l) = 1/(1-GumbelCompute(k,l));
     end 
 end 
 
@@ -153,9 +153,20 @@ end
 
 figure(24)
 n = 1:39;
-m = 0:0.5:110;
-plot(Weibull_T, sortedAnnualMax(),'.')
+plot(Weibull_T, sortedAnnualMax(),'.') % dimensions : (39x1), (39x6)
 
 figure(25)
-plot(T,m)
+n = 1:39;
+plot(Weibull_T, sortedAnnualMax(),'.') % dimensions : (39x1), (39x6)
+hold on 
+% compute h by reverting analytical formula (check variables)
+% hrevert = muG - log(-log(1-1/T))/alphaG;
+hrevert = zeros(221,6);
+Tbis = 0:0.5:110;
+for k = 1:221
+    for l = 1:6
+        hrevert(k,l) = GumbelPar(2,l) -log(-log(1-1/Tbis(k)))/GumbelPar(1,l);
+    end 
+end 
 
+plot(Tbis,hrevert) % (221x1), (221x6)
