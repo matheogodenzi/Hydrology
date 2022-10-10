@@ -156,9 +156,6 @@ n = 1:39;
 plot(Weibull_T, sortedAnnualMax(),'.') % dimensions : (39x1), (39x6)
 
 figure(25)
-n = 1:39;
-plot(Weibull_T, sortedAnnualMax(),'.') % dimensions : (39x1), (39x6)
-hold on 
 % compute h by reverting analytical formula (check variables)
 % hrevert = muG - log(-log(1-1/T))/alphaG;
 hrevert = zeros(221,6);
