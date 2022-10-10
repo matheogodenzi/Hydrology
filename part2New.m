@@ -169,7 +169,7 @@ xlabel('Return period T [years]')
 ylabel('Rainfall depth [mm]')
 axis([0, 60, 0, 140])
 hold on 
-plot(Tbis,hrevert) % (221x1), (221x6)
+plot(Tbis,hrevert); % (221x1), (221x6)
 lgd = legend({' ',' ',' ',' ',' ',' ', '1 hour', '3 hours', '6 hours', ...
         '12 hours', '24 hours', '48 hours'}, ...
         "Location", "southeast", "NumColumns",2);
@@ -188,7 +188,7 @@ for t = [10, 40, 100]
     end 
     k = k + 1;
 end 
-H_Gum
+H_Gum;
 
 %% (8) saving elements 
 T = [10 40 100];
