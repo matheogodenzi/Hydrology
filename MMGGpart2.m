@@ -49,10 +49,10 @@ plot(sortedAnnualMax(), Fh, '.');
 title('Empirical Frequencies vs Precipitation Depth ')
 xlabel('Precipitation Depth [mm]') 
 ylabel('Empirical Frequencies [Fh]')
-legend({'Annual Max depth in 1 hour [mm]','Annual Max depth in 3 hours [mm]', ...
-      'Annual Max depth in 6 hours [mm]','Annual Max depth in 12 hours [mm]', ...
-      'Annual Max depth in 24 hours [mm]','Annual Max depth in 48 hours [mm]',}, ...
-      'Location','southeast')
+lgd = legend({'1 hour', '3 hours', '6 hours', ...
+        '12 hours', '24 hours', '48 hours'}, ...
+        "Location", "southeast", "NumColumns",2);
+title(lgd, "Annual Max depth over time span [mm]")
 
 %% (2) Fitting Gumbel curve
 % method of moments
@@ -104,7 +104,6 @@ for k = 1:m
     end 
 end 
 
-
 %% (4) Plot 
 
 figure(23)
@@ -112,21 +111,16 @@ plot(n, GumbelComputeMoments) % (1x39), (221x6) ??
 title('Gumbel Distributions')
 xlabel('Precipitation Depth h [mm]') 
 ylabel('Empirical Frequencies [Fh] and Regression Values')
-legend({'Annual Max depth in 1 hour [mm]','Annual Max depth in 3 hours [mm]', ...
-        'Annual Max depth in 6 hours [mm]','Annual Max depth in 12 hours [mm]', ...
-        'Annual Max depth in 24 hours [mm]','Annual Max depth in 48 hours [mm]',}, ...
-        'Location','southeast')
-
 hold on 
 plot(sortedAnnualMax(), Fh, '.'); % (39x6), (39x1)
-legend({'Annual Max depth in 1 hour [mm]','Annual Max depth in 3 hours [mm]', ...
-        'Annual Max depth in 6 hours [mm]','Annual Max depth in 12 hours [mm]', ...
-        'Annual Max depth in 24 hours [mm]','Annual Max depth in 48 hours [mm]',}, ...
-        'Location','southeast')
+lgd = legend({' ',' ',' ',' ',' ',' ','1 hour','3 hours', ...
+        '6 hours','12 hours', ...
+        '24 hours','48 hours',}, ...
+        'Location','southeast', 'NumColumns',2); % ++ line and point order coherence with figure 25
+title(lgd, "Annual Max depth over time span [mm]")
 % TO-DO : set the same colors to both plot elements 1 to 1 (regressions and
 % points) i.e. the points corresponding to a regression curve should have
 % the same color
-
 
 %% (5) Th and h
 
@@ -155,11 +149,7 @@ figure(24)
 n = 1:1:39;
 
 plot(Weibull_T, sortedAnnualMax(),'.'); % dimensions : (39x1), (39x6)
-
-figure(25)
-n = 1:39;
-plot(Weibull_T, sortedAnnualMax(),'.'); % dimensions : (39x1), (39x6)
-hold on 
+axis([0, 50, 0, 140])
 % compute h by reverting analytical formula (check variables)
 % hrevert = muG - log(-log(1-1/T))/alphaG;
 hrevert = zeros(221,6);
@@ -170,8 +160,21 @@ for k = 1:221
     end 
 end 
 
+figure(25)
+n = 1:39;
+plot(Weibull_T, sortedAnnualMax(),'.'); % dimensions : (39x1), (39x6)
+title('Continuous Gumbel distribution')
+xlabel('Return period T [years]') 
+ylabel('Rainfall depth [mm]')
+axis([0, 60, 0, 140])
+hold on 
 plot(Tbis,hrevert) % (221x1), (221x6)
+lgd = legend({' ',' ',' ',' ',' ',' ', '1 hour', '3 hours', '6 hours', ...
+        '12 hours', '24 hours', '48 hours'}, ...
+        "Location", "southeast", "NumColumns",2); % ++ line and point order coherence with figure 23
+title(lgd, "Annual Max depth over time span [mm]")
 
+hold off
 
 %% (7) Building matrix of predicted depth
 
