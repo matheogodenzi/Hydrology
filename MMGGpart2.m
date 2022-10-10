@@ -118,7 +118,7 @@ legend({'Annual Max depth in 1 hour [mm]','Annual Max depth in 3 hours [mm]', ..
         'Location','southeast')
 
 hold on 
-plot(sortedAnnualMax(), Fh, '.');2 % (39x6), (39x1)
+plot(sortedAnnualMax(), Fh, '.'); % (39x6), (39x1)
 legend({'Annual Max depth in 1 hour [mm]','Annual Max depth in 3 hours [mm]', ...
         'Annual Max depth in 6 hours [mm]','Annual Max depth in 12 hours [mm]', ...
         'Annual Max depth in 24 hours [mm]','Annual Max depth in 48 hours [mm]',}, ...
@@ -140,7 +140,6 @@ for k = 1:q
 end 
 Weibull_T;
 
-% inverting Gumbel distribution 
 
 T = zeros(221,6);
 for k = 1:221
@@ -149,15 +148,17 @@ for k = 1:221
     end 
 end 
 
-
+%% (6) plotting 
 
 figure(24)
-n = 1:39;
-plot(Weibull_T, sortedAnnualMax(),'.') % dimensions : (39x1), (39x6)
+
+n = 1:1:39;
+
+plot(Weibull_T, sortedAnnualMax(),'.'); % dimensions : (39x1), (39x6)
 
 figure(25)
 n = 1:39;
-plot(Weibull_T, sortedAnnualMax(),'.') % dimensions : (39x1), (39x6)
+plot(Weibull_T, sortedAnnualMax(),'.'); % dimensions : (39x1), (39x6)
 hold on 
 % compute h by reverting analytical formula (check variables)
 % hrevert = muG - log(-log(1-1/T))/alphaG;
@@ -170,3 +171,23 @@ for k = 1:221
 end 
 
 plot(Tbis,hrevert) % (221x1), (221x6)
+
+
+%% (7) Building matrix of predicted depth
+
+H_Gum = zeros(3,6);
+k = 1;
+for t = [10, 40, 100]
+    s = Tbis == t;
+    for u = 1:6
+        H_Gum(k,u) = hrevert(s,u);
+    end 
+    k = k + 1;
+end 
+H_Gum
+
+%% (8) saving elements 
+T = [10 40 100];
+D = [1 3 6 12 24 48];
+save('assignment1_output_part2.mat','H_Gum', 'T', 'D');
+
