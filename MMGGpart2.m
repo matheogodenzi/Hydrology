@@ -45,7 +45,7 @@ YF = -log(-log(Fh));
 % Plot of Fh vs h
 % for first column
 figure(22)
-plot(sortedAnnualMax(), Fh, 'o');
+plot(sortedAnnualMax(), Fh, '.');
 title('Empirical Frequencies vs Precipitation Depth ')
 xlabel('Precipitation Depth [mm]') 
 ylabel('Empirical Frequencies [Fh]')
@@ -58,7 +58,7 @@ legend({'Annual Max depth in 1 hour [mm]','Annual Max depth in 3 hours [mm]', ..
 % method of moments
 % calculating means and standard deviation for each duration 
 std_vect = std(AnnualMax);
-mean_vect = mean (AnnualMax);
+mean_vect = mean(AnnualMax);
 
 %defining variables 
 GumbelParMoments = zeros(2,6);
@@ -92,7 +92,7 @@ GumbelPar;
 
 %% (3)Compute analytical Gumbel distributions
 
-n = 0:0.5:110;%TO-DO : revoir si on veut pas partir à 1 plutôt...?
+n = 0:0.5:110;%TO-DO : revoir si on veut pas partir à 1 plutôt...?  % selon les graphe du cours, mieux de partir à 0 MMG               
 m = length(n);
 GumbelCompute = zeros(m,6);
 GumbelComputeMoments = zeros(m,6);
@@ -118,7 +118,7 @@ legend({'Annual Max depth in 1 hour [mm]','Annual Max depth in 3 hours [mm]', ..
         'Location','southeast')
 
 hold on 
-plot(sortedAnnualMax(), Fh, 'o');
+plot(sortedAnnualMax(), Fh, '.');
 legend({'Annual Max depth in 1 hour [mm]','Annual Max depth in 3 hours [mm]', ...
         'Annual Max depth in 6 hours [mm]','Annual Max depth in 12 hours [mm]', ...
         'Annual Max depth in 24 hours [mm]','Annual Max depth in 48 hours [mm]',}, ...
@@ -154,7 +154,7 @@ end
 figure(24)
 n = 1:39;
 m = 0:0.5:110;
-plot(Weibull_T, sortedAnnualMax(),'o')
+plot(Weibull_T, sortedAnnualMax(),'.')
 
 figure(25)
 plot(T,m)
