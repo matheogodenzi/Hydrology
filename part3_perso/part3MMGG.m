@@ -56,14 +56,17 @@ param = zeros(3,3);
 threshold = [30 70 220];
 
 for k = 1:3
-    diff_squared = 1;
     for cspace = linspace(0,100,150)
         for fspace = linspace(-1, 1, 200)
             for espace = linspace(0, 1, 200)
                 for l = 1:6
                     hcomp = cspace*D(l)/((D(l).^espace)+fspace);
                     hgum = H_Gum(k,l);
-                    diff_squared = diff_squared + (hcomp-hgum).^2;
+                    square = (hcomp-hgum).^2;
+                    if l==1
+                        diff_squared = square;
+                    end 
+                    diff_squared = diff_squared + square;
                 end
                 if diff_squared <= threshold(k)
                     threshold(k) = diff_squared;
@@ -78,3 +81,16 @@ for k = 1:3
 end
 
 
+%%
+D_prime = 0:1:100;
+h_prime = zeros(length(D_prime), 3);
+for k = 1:length(D_prime)
+    for l = 1:3
+        h_prime(k,l)= param(l,1)*D_prime(k)/(D_prime(k).^param(l,2)+ param(l,3));
+    end 
+end 
+
+flipped = H_Gum.';
+
+figure
+plot(h_prime)
