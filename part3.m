@@ -21,11 +21,15 @@ load assignment1_output_part2.mat
 % finding them by brute force, i.e. testing all possibilities and keeping
 % the ones that matches the best
 
-cspace = linspace(0, 100, 150);
-fspace = linspace(-1, 1, 200);
-espace = linspace(0, 1, 200);
-
-
+for cspace = linspace(0,100,150)
+    for fspace = linspace(-1, 1, 200)
+        for espace = linspace(0, 1, 200)
+        
+        
+        
+        end
+    end
+end
 
 
 
