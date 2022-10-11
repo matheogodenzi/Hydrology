@@ -16,6 +16,15 @@ clc %clear the command window
 % import the data from previous part
 load assignment1_output_part2.mat 
 
+% we search for parameters c, e, f, to build the DDF curves given by:
+% h = c*D/(D**e + f)
+% finding them by brute force, i.e. testing all possibilities and keeping
+% the ones that matches the best
+
+cspace = linspace(0, 100, 150);
+fspace = linspace(-1, 1, 200);
+espace = linspace(0, 1, 200);
+
 
 
 
