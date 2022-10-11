@@ -21,6 +21,7 @@ load assignment1_output_part2.mat
 % finding them by brute force, i.e. testing all possibilities and keeping
 % the ones that matches the best
 
+%{
 parameters = zeros(18,3); %rows : 3 x 6 durations (corresponding to all 
 % the durations we have for a given return period) cols: parameters  
 
@@ -47,3 +48,33 @@ for k = 1:3
 end 
 
 parameters
+%}
+
+%% Second try
+
+param = zeros(3,3);
+threshold = [30 70 220];
+
+for k = 1:3
+    diff_squared = 1;
+    for cspace = linspace(0,100,150)
+        for fspace = linspace(-1, 1, 200)
+            for espace = linspace(0, 1, 200)
+                for l = 1:6
+                    hcomp = cspace*D(l)/((D(l).^espace)+fspace);
+                    hgum = H_Gum(k,l);
+                    diff_squared = diff_squared + (hcomp-hgum).^2;
+                end
+                if diff_squared <= threshold(k)
+                    threshold(k) = diff_squared;
+                    param(k,1) = cspace;
+                    param(k,2) = espace;
+                    param(k,3) = fspace;
+                end 
+
+            end
+        end
+    end 
+end
+
+
