@@ -21,49 +21,20 @@ load assignment1_output_part2.mat
 % finding them by brute force, i.e. testing all possibilities and keeping
 % the ones that matches the best
 
-%{
-parameters = zeros(18,3); %rows : 3 x 6 durations (corresponding to all 
-% the durations we have for a given return period) cols: parameters  
-
-threshold = [25 60 120];
-for k = 1:3
-    for l = 1:6
-        min_diff = threshold(k);
-        for cspace = linspace(0,100,150)
-            for fspace = linspace(-1, 1, 200)
-                for espace = linspace(0, 1, 200)
-                    hcomp = cspace*D(l)/(D(l).^espace+fspace);
-                    hgum = H_Gum(k,l);
-                    diff_squared = (hcomp-hgum).^2;
-                    if   diff_squared < min_diff
-                        min_diff =  diff_squared;
-                        parameters(k*l,1) = cspace;
-                        parameters(k*l,2) = espace;
-                        parameters(k*l,3) = fspace;
-                    end 
-                end
-            end
-        end
-    end
-end 
-
-parameters
-%}
-
-%% Second try
+%% (1) Computing parameters
 
 param = zeros(3,3);
 threshold = [30 70 220];
 
-for k = 1:3
+for k = 1:3 % iterating over return periods T
     for cspace = linspace(0,100,150)
         for fspace = linspace(-1, 1, 200)
             for espace = linspace(0, 1, 200)
-                for l = 1:6
+                for l = 1:6 % iterating over event durations
                     hcomp = cspace*D(l)/((D(l).^espace)+fspace);
                     hgum = H_Gum(k,l);
                     square = (hcomp-hgum).^2;
-                    if l==1
+                    if l==1           % sum of squarred errors 
                         diff_squared = square;
                     end 
                     diff_squared = diff_squared + square;
@@ -79,9 +50,9 @@ for k = 1:3
         end
     end 
 end
+%% (2) Output table with parameters and errors
 
-
-%%
+%% (3) Plotting DDF curves and Gumbel estimation
 D_prime = 0:1:100;
 h_prime = zeros(length(D_prime), 3);
 for k = 1:length(D_prime)
