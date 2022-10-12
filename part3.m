@@ -66,5 +66,19 @@ end
 
 flipped = H_Gum.'; % transpose
 
+newcolors = [0.4660 0.6740 0.1880; 0 0.4470 0.7410; 0.6350 0.0780 0.1840];
+
 figure
+colororder(newcolors)
+scatter(D, flipped, ".")
+hold on 
+colororder(newcolors)
 plot(h_prime)
+title('Depth Duration Frequency Curves for different return periods')
+xlabel('Event Duration [hours]') 
+ylabel('Precipitation Depth [mm]')
+axis([0, 70, 0, 150])
+lgd = legend({' ',' ',' ',...
+            '10 years', '40 years', '100 years'},...
+               "Location", "southeast", "NumColumns", 2);
+title(lgd, "Gumbel Estimates         DDF Curves")
