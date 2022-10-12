@@ -51,6 +51,9 @@ for k = 1:3 % iterating over return periods T
     end 
 end
 %% (2) Output table with parameters and errors
+% rows = return period T
+% columns = calbrated parameters
+% last column = error (deviation) for each param
 
 %% (3) Plotting DDF curves and Gumbel estimation
 D_prime = 0:1:100;
