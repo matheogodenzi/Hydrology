@@ -1,4 +1,4 @@
-# hydrology
+# Hydrology
 repo for hydrology assignements 
 
 # Link to overleaf folder
