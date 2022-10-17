@@ -39,7 +39,7 @@ annual_prec = zeros(39,1);
 
 count = 1;
 for k = 1981:2019
-    indices = y == k;
+    indices = y == k; 
     annual_prec(count, 1) = sum(h(indices));
     count = count + 1;
 end 

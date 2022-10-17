@@ -36,8 +36,9 @@ for k = 1:3 % iterating over return periods T
                     square = (hcomp-hgum).^2;
                     if l==1           % sum of squarred errors 
                         diff_squared = square;
-                    end 
-                    diff_squared = diff_squared + square;
+                    else 
+                        diff_squared = diff_squared + square;
+                    end
                 end
                 if diff_squared <= threshold(k)
                     threshold(k) = diff_squared;
@@ -65,3 +66,14 @@ flipped = H_Gum.';
 
 figure
 plot(h_prime)
+
+%% (3) creating a table :
+
+error = reshape(threshold,3,1);
+RowNames = {'T=10';'T=40';'T=100'};
+c = param(:,1);
+e = param(:,2);
+f = param(:,3);
+
+T = table(c, e, f,error,'RowNames',RowNames);
+
