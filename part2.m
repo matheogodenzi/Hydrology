@@ -151,7 +151,7 @@ figure(23)
 n = 1:39;
 
 colororder(newcolors)
-plot(Weibull_T, sortedAnnualMax(),'.'); % dimensions : (39x1), (39x6) -> empirical data
+plot(Weibull_T, sortedAnnualMax(),'o'); % dimensions : (39x1), (39x6) -> empirical data
 title('Rainfall Depth vs Return Period')
 xlabel('Return period T [years]') 
 ylabel('Rainfall depth [mm]')
