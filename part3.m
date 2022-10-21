@@ -56,7 +56,7 @@ end
 % last column = error (deviation) for each param
 
 %% (3) Plotting DDF curves and Gumbel estimation
-D_prime = 0:1:100;
+D_prime = 1:1:100;
 h_prime = zeros(length(D_prime), 3);
 for k = 1:length(D_prime)
     for l = 1:3
