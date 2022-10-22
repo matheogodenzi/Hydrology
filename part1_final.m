@@ -62,8 +62,7 @@ stem(years, annual_prec,'Color',[0,0.7,0.9]);
 title('Total Annual Precipitations');
 xlabel('years');
 ylabel('Total annual precipitations [mm]');
-print('figure11','-vector','-dpdf') %Saved to 'figure11.pdf'...
-                                      %(useful for LaTeX)
+%saveas(gcf,'figure11') %Saves the figure as "figure11" in png. format                              
 
 % -------------------------------------------------------------------------
 % # 5: Compute rainfall maxima of a certain duration
