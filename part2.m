@@ -5,7 +5,7 @@
 % -------------------------------------------------------------------------
 
 clear variables %clear the workspace variables
-close all %close alla figures
+close all %close all figures
 clc %clear the command window
 
 % -------------------------------------------------------------------------
@@ -95,7 +95,7 @@ GumbelPar;
 n = 0:0.5:110; %initiating a vector of 221 terms             
 m = length(n); %storing n's length in one variable
 GumbelCompute = zeros(m,6); %saving up some memory for the vector to be built
-GumbelComputeMoments = zeros(m,6); %
+GumbelComputeMoments = zeros(m,6);
 
 for k = 1:m
     for l = 1:6
@@ -124,10 +124,10 @@ title(lgd, "Annual Max depth over time span [mm]")
 print('GumbelDist','-vector','-dpdf') % this saves 'my_figure.pdf' (useful for LaTeX)
 %% (5) Th and h
 
-%computing return period
+% computing return period
 
 q = length(Fh);
-Weibull_T = zeros(q,1); %saving some space in the memory 
+Weibull_T = zeros(q,1); % saving space in the memory 
 
 for k = 1:q
     Weibull_T(k) = 1/(1-Fh(k));
