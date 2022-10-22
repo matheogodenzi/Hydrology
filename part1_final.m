@@ -63,7 +63,6 @@ title('Total Annual Precipitations');
 xlabel('years');
 ylabel('Total annual precipitations [mm]');
 print('figure11','-vector','-dpdf') %Saved to 'figure11.pdf'...
-                                      %(useful for LaTeX)
 
 % -------------------------------------------------------------------------
 % # 5: Compute rainfall maxima of a certain duration

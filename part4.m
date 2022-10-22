@@ -54,14 +54,14 @@ for k = 1981:2019 %iterationg over the years
     count = count + 1; 
 end 
 
-sixteen_hours_max
+sixteen_hours_max;
 
 % sorting data columns by amplitude
 SortedSixteenMax = sort(sixteen_hours_max,1, 'ascend');
 SortedSixteenMax;
 
 %% Approximating the return period based on empirical values 
-T_empirical = (length(SortedSixteenMax)+1)/((length(SortedSixteenMax)+1)-sum(SortedSixteenMax<80));
+T_empirical = (length(SortedSixteenMax)+1)/((length(SortedSixteenMax)+1)-(sum(SortedSixteenMax<80)+1));
 %here we set a bondary where rainfall depths is strictly smaller than 80mm.
 
 %it is not the most precise because there's a gap in the data between 76 mm
@@ -102,6 +102,8 @@ title(lgd, "Annual Max depth over time span [mm]")
 
 %% (2) Fitting Gumbel curve
 % Gumbel method
+std_vect = std(SortedSixteenMax);
+mean_vect = mean(SortedSixteenMax);
 GumbelPar = zeros(2,1);
 m = length(std_vect);
 
@@ -123,29 +125,26 @@ GumbelPar;
 
 n = 0:0.2:110; %initiating a vector of 551 terms             
 m = length(n); %storing n's length in one variable
-GumbelCompute = zeros(m,1); %saving up some memory for the vector to be built
-GumbelComputeMoments = zeros(m,1); %
+GumbelCompute16 = zeros(m,1); %saving up some memory for the vector to be built
 
 for k = 1:m
    % using the gumbel method paramters 
    GumbelCompute16(k,1) = exp(-exp(-GumbelPar(1,1)*(n(k)-GumbelPar(2,1))));
-   % using the moments parameters
-   GumbelComputeMoments(k,1) = exp(-exp(-GumbelParMoments(1,1)*(n(k)-GumbelParMoments(2,1))));
 end 
 GumbelCompute16;
 %% (4) Plot 
 
-figure(22)
-colororder(newcolors)
+figure(42)
+colororder(newcolors);
 plot(n, GumbelCompute16) %using the Gumbel parameters as they are more precise
-title('Gumbel Distributions') 
-xlabel('Precipitation Depth h [mm]') 
-ylabel('Empirical Frequencies [Fh] and Regression Curves')
+title('Gumbel Distributions');
+xlabel('Precipitation Depth h [mm]') ;
+ylabel('Empirical Frequencies [Fh] and Regression Curves');
 hold on 
 plot(SortedSixteenMax, Fh, '.'); % (39x1), (39x1)
 lgd = legend({'regression ','empirical data',}, ...
         'Location','southeast', 'NumColumns',2);
-title(lgd, "Annual Max depth over 16h [mm]")
+title(lgd, "Annual Max depth over 16h [mm]");
 %print('GumbelDist','-vector','-dpdf') % this saves 'my_figure.pdf' (useful for LaTeX)
 %% (5) Computing the return period based on empirical data
 
@@ -163,7 +162,7 @@ Weibull_T;
 
 %Here's the answer to the question, derived from the Gu,bel distribution
 %fit.
-T16 = 1/(1-exp(-exp(-GumbelPar(1)*(80-GumbelPar(2)))));
+T16 = 1/(1-exp(-exp(-GumbelPar(1)*(80-GumbelPar(2)))))
 
 % computing h by reverting analytical formula
 hrevert = zeros(551,1);
@@ -174,7 +173,7 @@ end
 
 
 % measured (dots) and estimated (smooth lines) rainfall depth vs return period 
-figure(23)
+figure(43)
 n = 1:39;
 
 colororder(newcolors)
