@@ -33,7 +33,7 @@ fprintf('%i empty values\n', sum(emptyValues)); %display how many missing values
 
 
 % -------------------------------------------------------------------------
-% # 6: Compute rainfall maxima for 16 consecutive hours over a year
+% # Compute rainfall maxima for 16 consecutive hours over a year
 % -------------------------------------------------------------------------
 %%
 sixteen_hours_max = zeros(39,1); % building a vector 
@@ -160,7 +160,7 @@ Weibull_T;
 
 %% (6) Computing return period based on gumbel parameters and plotting
 
-%Here's the answer to the question, derived from the Gu,bel distribution
+%Here's the answer to the question, derived from the Gumbel distribution
 %fit.
 T16 = 1/(1-exp(-exp(-GumbelPar(1)*(80-GumbelPar(2)))))
 

@@ -53,16 +53,17 @@ end
 annual_prec;
 years = 1981:2019; 
 
+%finding inf and sup 
 [min_prec, min_year] = min(annual_prec);
-min_prec
-years(min_year)
+min_prec;
+years(min_year);
 
 figure(11) 
 stem(years, annual_prec,'Color',[0,0.7,0.9]);
 title('Total Annual Precipitations');
 xlabel('years');
 ylabel('Total annual precipitations [mm]');
-%saveas(gcf,'figure11') %Saves the figure as "figure11" in png. format                              
+%saveas(gcf,'figure11.png') %Saves the figure as "figure11" in png. format                              
 
 % -------------------------------------------------------------------------
 % # 5: Compute rainfall maxima of a certain duration
@@ -136,7 +137,7 @@ for k = 1981:2019
     count = count + 1;
 end 
 
-AnnualMax
+AnnualMax;
 
 
 
