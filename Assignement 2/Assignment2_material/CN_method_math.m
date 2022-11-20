@@ -87,7 +87,11 @@ for l = 1:3
         end 
 
         % computing Fa
-        Fa(k,l)= (S*Pe(k,l))/(P(k,l)-Ia(l));
+        if P(k,l) <= Ia(l)
+            Fa(k,l) = 0;
+        else 
+            Fa(k,l)= (S*Pe(k,l))/(P(k,l)-Ia(l));
+        end 
 
         % computing Je and I since the time step in 1 we divide by 1
         if k == 1
@@ -116,11 +120,11 @@ figure(1)
 
 for m = 1:3
     subplot(3,1,m)
-    plot(t, event_matrix(:,m), '-o');
+    stem(t, event_matrix(:,m), '-o');
     hold on
     plot(t, I(:,m), '-o');
     hold on 
-    plot(t, Je(:,m), '-o');
+    bar(t, Je(:,m));
     hold off
     xlabel('time [h]')
     ylabel('intensity [mm/h]')
@@ -128,44 +132,17 @@ for m = 1:3
     legend("J",  "I",  "Je");
 end 
 
-%{
-subplot(3,1,2)
-plot(t, event_matrix(:,2));
-hold on
-plot(t, I(:,2));
-hold on 
-plot(t, Je(:,2));
-hold off
-xlabel('time [h]')
-ylabel('intensity [mm/h]')
-title('event 2')
-legend("J",  "I",  "Je");
+%%
+% --------------------------------------------------------------------------
+% 5) Compute
+%--------------------------------------------------------------------------
 
-subplot(3,1,3)
-plot(t, event_matrix(:,3));
-hold on
-plot(t, I(:,3));
-hold on 
-plot(t, Je(:,3));
-hold off
-xlabel('time [h]')
-ylabel('intensity [mm/h]')
-title('event 3')
-legend("J",  "I",  "Je");
+% since they are all relative to one hour we multiply intesities by 1
+Je_tot = sum(1*Je, 1);
 
-
-subplot(3,1,)
-plot(,GR);
-ylabel('Global radiation')
-title('first event')
-
-subplot(3,1,2)
-plot(t,AT);
-ylabel('air temperature')
-title('second event')
-
-subplot(3,1,3)
-plot(t,RAH);
-ylabel('relative air humidity')
-title('third event')
-%}
+%%
+% --------------------------------------------------------------------------
+% 6) saving result
+%--------------------------------------------------------------------------
+J = event_matrix;
+save('output_part1.mat','J','Je', 'I');
