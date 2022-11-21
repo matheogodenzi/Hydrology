@@ -24,8 +24,11 @@ c = 40.2685;
 e = 0.7035;
 f = -0.0452;
 
-h_4h = c*4/(4.^e+ f);
+% for D = 4h it yields the following
+D = 4;
+h_4h = c*D/(D.^e+ f);
 
+% assigning mean intensity to each 1h step during 4h event
 event_3 = zeros(4,1);
 for k = 1:4
     event_3(k)=h_4h/4;
@@ -43,6 +46,7 @@ event_matrix = [event_1(:), event_2(:), event_3(:)];
 %--------------------------------------------------------------------------
 load('../Parameters/SCSpars.mat')
 percentages = reshape(percentages,[1,3]);
+% weighted average
 Average_CN = sum(CN.*percentages)/sum(percentages);
 
 
