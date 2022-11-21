@@ -97,7 +97,7 @@ for l = 1:3
             Fa(k,l)= (S*Pe(k,l))/(P(k,l)-Ia(l));
         end 
 
-        % computing Je and I since the time step in 1 we divide by 1
+        % computing Je = dPe/dt and I since the time step in 1 we divide by 1
         if k == 1
             Je(k,l) = Pe(k,l);
             I(k,l) = Fa(k,l);
@@ -132,16 +132,18 @@ for m = 1:3
     hold off
     xlabel('time [h]')
     ylabel('intensity [mm/h]')
+    ylim([0 20])
     title('event ' + string(m))
     legend("J",  "I",  "Je");
 end 
+% les docs sur le drive ont tous fait full bar plot, ça rend assez bien
 
 %%
 % --------------------------------------------------------------------------
 % 5) Compute
 %--------------------------------------------------------------------------
 
-% since they are all relative to one hour we multiply intesities by 1
+% since they are all relative to one hour we multiply intensities by 1
 Je_tot = sum(1*Je, 1);
 
 %%
