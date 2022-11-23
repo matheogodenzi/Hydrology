@@ -121,7 +121,7 @@ end
 % for the three events. Line plots with markers or bar plots are equally fine.
 t = 1:4;
 figure(1)
-
+legend("Precipitation Intensity (J)",  "Infiltration Intensity (I)",  "Effective Precipitation Intensity (Je)");
 for m = 1:3
     subplot(3,1,m)
     stem(t, event_matrix(:,m));
@@ -136,6 +136,22 @@ for m = 1:3
     title('event ' + string(m))
     legend("J",  "I",  "Je");
 end 
+
+%% This is the plot version we kept for the report
+
+figure (2)
+for m= 1:3
+    subplot(3,1,m)
+    bar(t, [event_matrix(:, m) I(:,m) Je(:,m)])
+    xlabel('time [h]')
+    ylabel('intensity [mm/h]')
+    ylim([0 20])
+    title('event ' + string(m))
+    if m == 1
+        legend("Precipitation Intensity (J)",  "Infiltration Intensity (I)",  "Effective Precipitation Intensity (Je)")
+    end
+end 
+
 % les docs sur le drive ont tous fait full bar plot, ça rend assez bien
 
 %%
