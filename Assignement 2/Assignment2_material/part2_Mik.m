@@ -8,7 +8,7 @@ clc %clear the command window
 load('output_part1.mat');
 %% (1)
 
-n_sub = 5; %each hour is broken into n_int intervals
+n_sub = 6; %each hour is broken into n_int intervals
 dt = 1/n_sub; % timestep [h]
 
 t_Je= linspace(0,4-1,4);
@@ -21,8 +21,19 @@ load('../Parameters/IUHpars.mat')
 % generating watershed IUH gamma distribution
 %gammaIUH = zeros(size(Jedt));
 
-gammaIUH = pdf('Gamma',40, par_shape, par_scale);
+% trying on a finite time interval
+T = linspace(0,60,4/dt);
 
+gammaIUH = gampdf(T , par_shape, par_scale);
+
+bar(T,gammaIUH)
+
+%% testing gammy function
+
+T_test = 0:40;
+gammaIUH_test = gampdf(T_test ,7, 1);
+
+bar(gammaIUH_test)
 
 
 
