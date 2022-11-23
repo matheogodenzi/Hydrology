@@ -120,7 +120,7 @@ figure(1)
 
 for m = 1:3
     subplot(3,1,m)
-    stem(t, event_matrix(:,m), '-o');
+    stem(t, event_matrix(:,m));
     hold on
     plot(t, I(:,m), '-o');
     hold on 
