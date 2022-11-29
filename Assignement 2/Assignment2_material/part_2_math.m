@@ -144,9 +144,9 @@ for k = 1:ev_nbr
     xC = (dt:dt:NC*dt);
     bar(t_Jedt,Jedt(:,k));
     hold on 
-    plot(xW, DischargeW(:,k));
+    bar(xW, DischargeW(:,k));
     hold on 
-    plot(xC-dt/10, DischargeC(:,k)); %-dt/10 is a way of visualizing the data. This way the histograms are not exactly superposed
+    bar(xC-dt/10, DischargeC(:,k)); %-dt/10 is a way of visualizing the data. This way the histograms are not exactly superposed
     hold off
     xlim([0 35]);
     ylim([0 max(Jedt(:,k)+0.2)]);
@@ -158,7 +158,7 @@ for k = 1:ev_nbr
     title(" Precipitation Event & Hydrological Response - " + string(k))
 end 
 
-%%
+%% crash test 
 
 figure
 xW = (dt:dt:NW*dt);
