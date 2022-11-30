@@ -8,14 +8,14 @@ clc %clear the command window
 load('output_part1.mat');
 %% (1)
 
-n_sub = 4; %each hour is broken into n_int intervals
+n_sub = 5; %each hour is broken into n_int intervals
 dt = 1/n_sub; % timestep [h]
 
 t_Je= linspace(0,4-1,4); % precipitation time 
 %t_Jedt = linspace(0,4-dt,4/dt); % precipitation time for dt timesteps starting at zero (first version)
 t_Jedt = dt*(dt:4/dt); % precipitation time for dt timesteps starting at dt (second version)
 Jedt = interp1(t_Je, Je, t_Jedt ,'previous','extrap'); % effective precipitation extrapolation
-
+Jedt
 %% (2) Watershed IUH
 % loading IUH params
 load('../Parameters/IUHpars.mat')
@@ -31,7 +31,7 @@ t_iuh=(dt:dt:cutoff); %second version
 IUHW = gampdf(t_iuh , par_shape, par_scale); %second version
 
 % verification of gamma curve 
-sumIUHW = sum(IUHW*dt);
+sumIUHW = sum(IUHW*dt)
 
 figure(1)
 %bar(T*dt,IUHW); %first version
@@ -60,7 +60,7 @@ IUHC = L./sqrt(4*pi*D)*t_iuh.^-(3/2).*exp(-((L-c*t_iuh).^2)./(4*D*t_iuh));
 figure(3)
 %bar(TC,IUHC);% first version
 bar(t_iuh,IUHC);% second version
-sumIUHC = sum(IUHC*dt);
+sumIUHC = sum(IUHC*dt)
 
 %% (3) IUHW figures 
 
@@ -99,6 +99,16 @@ for l = 1:ncolsW
 end 
 DischargeW = transpose(DischargeW);
 
+%% matlab conv
+
+QW = conv(IUHW, Jedt(:, 3)*dt);
+
+figure
+subplot(2,1,1)
+bar(DischargeW(:,3))
+subplot(2,1,2)
+bar(QW)
+
 %% plotting the results 
 xW = (dt:dt:NW*dt);
 figure
@@ -123,6 +133,14 @@ for l = 1:ncolsC % the inverse of what was done in the previous convolution
     end 
 end 
 DischargeC = transpose(DischargeC);
+%%
+QC = conv(IUHC, QW*dt);
+
+figure
+subplot(2,1,1)
+bar(DischargeC(:,3))
+subplot(2,1,2)
+bar(QC)
 %% plotting the results to see the difference between the IUH and the system's response.
 figure
 plot(DischargeW(:,1))
@@ -163,7 +181,11 @@ end
 figure
 xW = (dt:dt:NW*dt);
 xC = (dt:dt:NC*dt);
+ax = axes;
+set(gca, 'YDir', 'reverse');
 bar(t_Jedt,Jedt(:,1));
+ax = axes;
+set(gca, 'Color', 'none')
 hold on
 plot(xW, DischargeW(:,1));
 hold on 
@@ -177,9 +199,25 @@ legend("Effective Precipitation Intensity (Je)",  "Watershed Discharge Intensity
 title("Precipitation & Hydrological Response")
 %% (7) Discharge peaks
 
-peakW = max(DischargeW);
-peakC = max(DischargeC);
+% getting max discharge 
+[nr, nc] = size(DischargeW);
+peakW = zeros(1,nc);
+pkW_id = zeros(1,nc);
+peakC = zeros(1,nc);
+pkC_id = zeros(1,nc);
+for i = 1:nc
+    [peakW(i), pkW_id(i)] = max(DischargeW(:,i));
+    [peakC(i), pkC_id(i)] = max(DischargeC(:,i));
+end
 
+% getting corssponding time in hours 
+max_time_W = zeros(1, nc);
+max_time_C = zeros(1, nc);
+for i = 1:nc
+    max_time_W(i) = pkW_id(i)*dt; % the index reprsents the subinterval in terms of time. By multiplying by dt we get the ectual time in hours
+    max_time_C(i) = pkC_id(i)*dt;
+end
 %% (8) saving variables 
 %uncomment the next line to save the desired results on your terminal
 %save('output_part2.mat','dt','IUHW');
+
