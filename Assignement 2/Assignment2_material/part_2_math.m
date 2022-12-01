@@ -45,10 +45,10 @@ cutoff = 70;
 t_iuh=(dt:dt:cutoff); %second version 
 % sz = size(TC);
 
-%defining parameters of the probability density function 
-L = 10^4;
-D = 10^6;
-c = 0.3*3600;
+% defining parameters of the probability density function 
+L = 10^4; % [m]
+D = 10^6; % [m2/h]
+c = 0.3*3600; % [m/h] (3600 is to convert seconds to hours)
 
 % first version 
 %IUHC = L./sqrt(4*pi*D)*TC.^-(3/2).*exp(-((L-c*TC).^2)./(4*D*TC));
