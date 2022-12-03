@@ -70,7 +70,7 @@ bar(DischargeW);
 subplot(3,1,3);
 bar(transpose(QW)-DischargeW)
 
-% my convilution seems appropriate
+% my convolution seems appropriate
 
 %diff = transpose(QW)-DischargeW
 
@@ -150,9 +150,9 @@ figure
 subplot(2,1,1)
 plot(tnov, Qtot(november), LineWidth=1.5)
 hold on 
-bar(tnov, DischargeW(november))
+bar(tnov, DischargeW(november), 'FaceAlpha', .8)
 hold on
-bar(tnov, DischargeSW(november))
+bar(tnov, DischargeSW(november), 'FaceAlpha', .8)
 hold off
 legend("total runoff", "surface runoff", "subsurface runoff")
 subplot(2,1,2)
@@ -161,7 +161,7 @@ legend("QW/QSW ratio")
 
 %% (7) Compute total amount of timsteps 
 
-high = sum(Qtot > 0.2);
+high = sum(Qtot > 0.2); % boolean mask
 low = sum(Qtot < 0.002);
 
 high_percentage = high/length(Qtot)*100;
