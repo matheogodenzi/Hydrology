@@ -37,7 +37,7 @@ Pdt = interp1(tprime, h, t_dt ,'previous','extrap'); % effective precipitation e
 
 %% Verifying sub intervals 
 figure
-bar(Pdt)
+bar(Pdt*dt)
 
 %% (2) Separation into effective precipitation and infiltration
 Je = 0.3*Pdt;
