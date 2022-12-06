@@ -203,9 +203,24 @@ end
 
 
 %% (7) Discharge peaks
+% getting max discharge 
+[nr, nc] = size(DischargeW);
+peakW = zeros(1,nc);
+pkW_id = zeros(1,nc);
+peakC = zeros(1,nc);
+pkC_id = zeros(1,nc);
+for i = 1:nc
+    [peakW(i), pkW_id(i)] = max(DischargeW(:,i));
+    [peakC(i), pkC_id(i)] = max(DischargeC(:,i));
+end
 
-peakW = max(DischargeW);
-peakC = max(DischargeC);
+% getting corssponding time in hours 
+max_time_W = zeros(1, nc);
+max_time_C = zeros(1, nc);
+for i = 1:nc
+    max_time_W(i) = pkW_id(i)*dt; % the index reprsents the subinterval in terms of time. By multiplying by dt we get the ectual time in hours
+    max_time_C(i) = pkC_id(i)*dt;
+end
 
 %% (8) saving variables 
 %uncomment the next line to save the desired results on your terminal
