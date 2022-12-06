@@ -228,7 +228,7 @@ for k = 1:ev_nbr
     hold off
     xlabel('Time [h]');
     if k == 1
-        legend("Effective Precipitation Intensity (Je)",  "Watershed Discharge Intensity (QW)",  "Channel Discharge Intensity (QC)")
+        legend("Effective Precipitation Intensity (Je)",  "Watershed Discharge Intensity (Qw)",  "Channel Discharge Intensity (Qc)")
     end 
     title(" Precipitation Event & Hydrological Response - " + string(k))
 end
