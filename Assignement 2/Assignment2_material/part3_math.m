@@ -37,7 +37,12 @@ Pdt = interp1(tprime, h, t_dt ,'previous','extrap'); % effective precipitation e
 
 %% Verifying sub intervals 
 figure
-bar(Pdt*dt)
+new_t = t(1):minutes(dt*60):t(end);
+length(new_t)
+length(Pdt)
+bar(new_t,Pdt(1:length(new_t)))
+ylabel('rainfall intensity [mm/h] over timestep dt')
+title('total precipitation throughout the year 2018')
 
 %% (2) Separation into effective precipitation and infiltration
 Je = 0.3*Pdt;
@@ -65,7 +70,7 @@ QW = conv(Je,IUHW)*dt;
 figure
 subplot(3,1,1);
 bar(QW);
-subplot(3,1,2);
+subplot(3,1,2); 
 bar(DischargeW);
 subplot(3,1,3);
 bar(transpose(QW)-DischargeW)
@@ -154,10 +159,14 @@ bar(tnov, DischargeW(november), 'FaceAlpha', .8)
 hold on
 bar(tnov, DischargeSW(november), 'FaceAlpha', .8)
 hold off
+ylabel('discharge [mm/h]')
 legend("total runoff", "surface runoff", "subsurface runoff")
+title('Distinct Runoffs')
 subplot(2,1,2)
 plot(tnov, DischargeW(november)./DischargeSW(november))
+ylabel('percentage [%]')
 legend("QW/QSW ratio")
+title('November Time Series Ratio')
 
 %% (7) Compute total amount of timsteps 
 
@@ -178,7 +187,7 @@ tyear = ti:minutes(dt*60):tf;
 
 % plotting Qtot throughout the year
 figure 
-plot(tyear, Qtot(1:length(tyear), 1))
+plot(tyear, Qtot(1:length(tyear)))
 
 % plotting QW and QSW throughout the year 
 figure
@@ -187,3 +196,8 @@ plot(tyear, DischargeW(1:length(tyear), 1))
 subplot(2,1,2)
 plot(tyear, DischargeSW(1:length(tyear), 1))
 
+%%
+figure 
+plot(tyear, Qtot(1:length(tyear)))
+ylabel('Discharge intensity [mm/h] over time step dt')
+title('Total Discharge Throughout the Year')
