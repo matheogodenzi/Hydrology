@@ -202,6 +202,37 @@ for k = 1:ev_nbr
 end
 
 
+%% (6tris) final plot with everything and good axes
+[spl_nbr, ev_nbr] = size(Jedt);
+
+figure
+
+for k = 1:ev_nbr
+    
+    subplot(ev_nbr, 1, k)  
+    xW = (dt:dt:NW*dt);
+    xC = (dt:dt:NC*dt);
+    
+    yyaxis left 
+    bar(t_Jedt, Jedt(:,k), 'FaceColor', blue, 'EdgeColor', blue, 'LineWidth', 2);
+    axis ([0 50 0 max(Jedt(:,k))+2]);
+    set(gca, 'Ydir', 'reverse');
+    ylabel('Je [mm/h]')
+    
+    hold on 
+    yyaxis right 
+    stairs (xW, DischargeW(:,k),'LineWidth', 1.5, 'LineStyle', '-', 'Color', orange);
+    stairs (xC-dt/10, DischargeC(:,k),'LineWidth', 1.5, 'LineStyle', '-', 'Color', yellow);
+    ylabel('Q [mm/h]');
+    axis ([0 50 0 max(DischargeW(:,k))+1]);
+    hold off
+    xlabel('Time [h]');
+    if k == 1
+        legend("Effective Precipitation Intensity (Je)",  "Watershed Discharge Intensity (Qw)",  "Channel Discharge Intensity (Qc)")
+    end 
+    title(" Precipitation Event & Hydrological Response - " + string(k))
+end
+
 %% (7) Discharge peaks
 % getting max discharge 
 [nr, nc] = size(DischargeW);
@@ -218,7 +249,7 @@ end
 max_time_W = zeros(1, nc);
 max_time_C = zeros(1, nc);
 for i = 1:nc
-    max_time_W(i) = pkW_id(i)*dt; % the index reprsents the subinterval in terms of time. By multiplying by dt we get the ectual time in hours
+    max_time_W(i) = pkW_id(i)*dt; % the index represents the subinterval in terms of time. By multiplying by dt we get the ectual time in hours
     max_time_C(i) = pkC_id(i)*dt;
 end
 

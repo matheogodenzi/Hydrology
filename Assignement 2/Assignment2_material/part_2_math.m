@@ -214,7 +214,7 @@ end
 max_time_W = zeros(1, nc);
 max_time_C = zeros(1, nc);
 for i = 1:nc
-    max_time_W(i) = pkW_id(i)*dt; % the index reprsents the subinterval in terms of time. By multiplying by dt we get the ectual time in hours
+    max_time_W(i) = pkW_id(i)*dt; % the index represents the subinterval in terms of time. By multiplying by dt we get the ectual time in hours
     max_time_C(i) = pkC_id(i)*dt;
 end
 %% (8) saving variables 
