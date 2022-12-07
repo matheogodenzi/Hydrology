@@ -33,20 +33,20 @@ fprintf('%i empty values\n', sum(emptyValues)); %display how many...
 [nr,nc]=size(T);
 tprime= linspace(0,nr-1,nr);
 t_dt = dt*(dt:nr/dt); % precipitation time for dt timesteps starting at dt (second version)
-Pdt = interp1(tprime, h, t_dt ,'previous','extrap'); % effective precipitation extrapolation
+J = interp1(tprime, h, t_dt ,'previous','extrap'); % effective precipitation extrapolation
 
 %% Verifying sub intervals 
 figure
 new_t = t(1):minutes(dt*60):t(end);
 length(new_t)
-length(Pdt)
-bar(new_t,Pdt(1:length(new_t)))
+length(J)
+bar(new_t,J(1:length(new_t)))
 ylabel('rainfall intensity [mm/h] over timestep dt')
 title('total precipitation throughout the year 2018')
 
 %% (2) Separation into effective precipitation and infiltration
-Je = 0.3*Pdt;
-I = 0.1*Pdt;
+Je = 0.3*J;
+I = 0.1*J;
 
 %% (3) Surface contributions
 
@@ -92,11 +92,25 @@ t_iuh=(dt:dt:cutoff); % time vector
 IUHSW = gampdf(t_iuh , par_shape, par_scale); % IUH sub surface generation 
 
 % verification of gamma curve 
-sumIUHSW = sum(IUHSW*dt);
+sumIUHSW = sum(IUHSW*dt)
+sumIUWW = sum(IUHW*dt)
 
+length(t_iuh);
+length(IUHSW);
+length(IUHW);
+%%
 figure
 %bar(T*dt,IUHW); %first version
-bar(t_iuh*dt,IUHSW); %second version
+bar(t_iuh(1:length(IUHW)), IUHW)
+hold on
+bar(t_iuh+dt/10, IUHSW)
+hold off
+legend('IUHSW', 'IUHW')
+xlim([0 50])
+legend('IUH surface', 'IUH subsurface')
+xlabel('time [h]')
+ylabel('response')
+title('surface and subsurface instantaneous unit hydrographs')
 
 %% (4.2) subsurface convolution 
 
@@ -135,6 +149,13 @@ bar(transpose(QSW)-DischargeSW)
 
 sz = length(t_dt);
 
+% the surface contibution to runoff 
+Qsurf = sum(DischargeW(1:sz, 1));
+%the subsurface contribution to runoff 
+Qsubsurf = sum(DischargeSW(1:sz, 1));
+
+% total runoff
+Qcumulated = Qsubsurf + Qsurf
 Qtot = DischargeW(1:sz, 1)+DischargeSW(1:sz, 1);
 
 %% (6) Figure
@@ -161,11 +182,11 @@ bar(tnov, DischargeSW(november), 'FaceAlpha', .8)
 hold off
 ylabel('discharge [mm/h]')
 legend("total runoff", "surface runoff", "subsurface runoff")
-title('Distinct Runoffs')
+title('Surface and Subsurface Runoff Contributions in November 2018')
 subplot(2,1,2)
-plot(tnov, DischargeW(november)./DischargeSW(november))
+plot(tnov, DischargeW(november)./Qtot(november))
 ylabel('percentage [%]')
-legend("QW/QSW ratio")
+legend("Qsurface/Qtot ratio")
 title('November Time Series Ratio')
 
 %% (7) Compute total amount of timsteps 
@@ -199,5 +220,5 @@ plot(tyear, DischargeSW(1:length(tyear), 1))
 %%
 figure 
 plot(tyear, Qtot(1:length(tyear)))
-ylabel('Discharge intensity [mm/h] over time step dt')
+ylabel('Discharge intensity [mm/h]')
 title('Total Discharge Throughout the Year')

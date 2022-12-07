@@ -15,7 +15,7 @@ t_Je= linspace(0,4-1,4); % precipitation time
 %t_Jedt = linspace(0,4-dt,4/dt); % precipitation time for dt timesteps starting at zero (first version)
 t_Jedt = dt*(dt:4/dt); % precipitation time for dt timesteps starting at dt (second version)
 Jedt = interp1(t_Je, Je, t_Jedt ,'previous','extrap'); % effective precipitation extrapolation
-Jedt
+Jedt;
 %% (2) Watershed IUH
 % loading IUH params
 load('../Parameters/IUHpars.mat')
@@ -219,5 +219,5 @@ for i = 1:nc
 end
 %% (8) saving variables 
 %uncomment the next line to save the desired results on your terminal
-%save('output_part2.mat','dt','IUHW');
+save('output_part2.mat','dt','IUHW');
 

@@ -55,9 +55,10 @@ Average_CN = sum(CN.*percentages)/sum(percentages);
 % 3) Implement the CN method
 %--------------------------------------------------------------------------
 
+%%
 % Potential maximum soil moisture retention S
-S = 25.4*(1000/Average_CN-10);
-
+S = 25.4*((1000/Average_CN)-10);
+%%
 %SETTING VARIABLE VECTORS FOR EACH PARAMETERS 
 % The cumulative precipitation (P [mm])
 P = zeros(4,3);
